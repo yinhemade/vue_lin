@@ -1,0 +1,77 @@
+<template>
+  <div>
+    <h1>当前X的值为{{he}}</h1>
+    <h3>放大10倍的X的值为{{bigSum}}</h3>
+    <h3>我在{{xuexiao}}，学习{{subject}}</h3>
+    <h3 style="color: red">person组件总人数为{{personList.length}}</h3>
+    <select v-model.number="n">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <button @click="increment(n)">+</button>
+    <button @click="decrement(n)">-</button>
+    <button @click="incrementOdd(n)">X为奇数则加</button>
+    <button @click="incrementWait(n)">等一等再加</button>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+export default {
+    name:'CountBar',
+    data(){
+        return {
+            n:1, //用户选择的数字
+        }
+    },
+    computed:{
+        // sum(){
+        //     return this.$store.state.sum
+        // },
+        // bigSum(){
+        //     return this.$store.getters.bigSum
+        // },
+        // school(){
+        //     return this.$store.state.school
+        // },
+        // subject(){
+        //     return this.$store.state.subject
+        // },
+        //****************************************************************************** */
+        // mapState第一种写法,对象法————不同名或者同名均可，利用ES6语法
+        ...mapState('countAbout',{he:'sum',xuexiao:'school',subject:'subject'}),
+        // mapState第二种写法，数组法————只能同名，估计是vuex的语法糖
+        ...mapState('personAbout',['personList']),
+        // mapGetters第一种，对象法————不同名/不同名
+        ...mapGetters('countAbout',['bigSum'])
+
+    },
+    methods:{
+        // increment(){
+        //     this.$store.commit('JIA',this.n)
+        // },
+        // decrement(){
+        //     this.$store.commit('JIAN',this.n)
+        // },
+        // incrementOdd(){
+        //     this.$store.dispatch('ji',this.n)
+        // },
+        // incrementWait(){
+        //     this.$store.dispatch('waitjia',this.n)            
+        // },
+// mapMutations\mapActions的对象用法，
+        ...mapMutations('countAbout',{increment:'JIA',decrement:'JIAN'}),
+        ...mapActions('countAbout',{incrementOdd:'ji',incrementWait:'waitjia'}),
+        // mapMutations\mapActions的数组用法,必须把click的方法换成'JIA','JIAN',ji','waitjia'
+    //     ...mapMutations(['JIA','JIAN']),
+    //     ...mapActions(['ji','waitjia'])
+    }
+}
+</script>
+
+<style scoped>
+    *{
+        margin-right: 5px;
+    }
+</style>

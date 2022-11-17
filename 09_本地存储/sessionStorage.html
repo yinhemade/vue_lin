@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+    <style>
+        *{
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>sessionStorage(会话存储)</h2>
+    <button onclick="savaData()" >点我保存数据</button>
+    <button onclick="readData()" >点我查看数据</button>
+    <button onclick="deleteData()" >点我删除数据</button>
+    <button onclick="clearData()" >点我清空数据</button>
+    <script type="text/javascript">
+        const  p = {name:'张三', age:18}
+        function savaData(){
+            sessionStorage.setItem('msg', 'hello!')
+            sessionStorage.setItem('msg2', '666')
+            sessionStorage.setItem('person', JSON.stringify(p))//不然会调用对象的toString方法，导致任何对象都是[Object Object]
+        }
+        function readData(){
+            console.log(sessionStorage.getItem('msg'))
+            console.log(sessionStorage.getItem('msg2'))
+            console.log(JSON.parse(sessionStorage.getItem('person')))
+            console.log(sessionStorage.getItem('msg3'));
+        }
+        function deleteData(){
+            sessionStorage.removeItem('msg2')
+        }
+        function clearData(){
+            sessionStorage.clear()
+        }
+
+
+    </script>
+</body>
+</html>
